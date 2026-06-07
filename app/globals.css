@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #FDFDFD;
-  --foreground: #111111;
+  --background: #08080A;
+  --foreground: #EDEDEF;
   --accent: #E50914;
-  --card-bg: #FFFFFF;
-  --border-dark: #E5E5E5;
-  --muted-gray: #666666;
+  --card-bg: #0F0F12;
+  --border-dark: #1E1E24;
+  --muted-gray: #8A8A93;
 }
 
 /* Base Body Styles */
@@ -40,8 +40,8 @@ body {
   position: fixed;
   inset: 0;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 1;
