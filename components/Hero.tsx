@@ -337,7 +337,7 @@ export default function Hero() {
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
           <a
-            href="/sarath_resume.pdf"
+            href="/Sarath Kumar Bhasa.docx"
             target="_blank"
             className="flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-foreground font-mono text-sm uppercase tracking-wider border border-borderDark hover:border-accent hover:text-accent transition-colors duration-300"
           >
