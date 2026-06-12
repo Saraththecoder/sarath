@@ -123,8 +123,8 @@ export default function TerminalConsole() {
           <div className="font-mono text-[11px] text-mutedGray uppercase leading-relaxed">
             <p className="text-neutral-100 font-semibold mb-1">COMMUNICATION PATHWAYS:</p>
             <p>EMAIL    : bhasasarathkumar051@gmail.com</p>
-            <p>LINKEDIN : LINKEDIN.COM/IN/SARATHBHASA</p>
-            <p>GITHUB   : GITHUB.COM/SARATHBHASA</p>
+            <p>LINKEDIN : linkedin.com/in/sarathakumarm3001</p>
+            <p>GITHUB   : github.com/sarathkumarbhasa</p>
           </div>
         );
         break;

@@ -33,7 +33,7 @@ export const projectsData: Project[] = [
     name: "AITS CANTEEN",
     description: "Full-stack college canteen ordering platform with AI-powered admin dashboard, real-time orders, UPI/QR payments, and Google authentication.",
     tech: ["React", "TypeScript", "Firebase", "Gemini AI"],
-    link: "#",
+    link: "https://github.com/Saraththecoder/CollegeCanteen",
   },
   {
     id: "fitstreak",
@@ -41,7 +41,7 @@ export const projectsData: Project[] = [
     name: "FITSTREAK",
     description: "Social fitness tracking application featuring a gamified streak system, friend feeds, and a mobile-first responsive layout.",
     tech: ["Next.js 14", "MongoDB", "NextAuth.js", "Tailwind CSS"],
-    link: "#",
+    link: "https://github.com/Saraththecoder/FitStreak",
   },
   {
     id: "mantra",
@@ -49,7 +49,7 @@ export const projectsData: Project[] = [
     name: "MANTRA",
     description: "Mood-based music & wellness platform with dynamic animations, audio visualizations, and a fully fluid responsive user interface.",
     tech: ["HTML", "CSS", "JavaScript"],
-    link: "#",
+    link: "https://github.com/themantra3/Mantra",
   },
   {
     id: "fraudshield-ai",
@@ -57,7 +57,7 @@ export const projectsData: Project[] = [
     name: "FRAUDSHIELD AI",
     description: "Multi-layered fraud detection system employing graph-based traversal techniques. Built and presented to law enforcement at a police hackathon.",
     tech: ["FastAPI", "React", "MongoDB", "NetworkX"],
-    link: "#",
+    link: "https://github.com/sarathkumarbhasa/spatpfinals",
   },
   {
     id: "sakhi",
@@ -65,7 +65,7 @@ export const projectsData: Project[] = [
     name: "SAKHI",
     description: "WhatsApp-based women's healthcare companion powered by generative AI. Named a finalist at the national Women Ideathon 1.0.",
     tech: ["WhatsApp AI", "Python", "FastAPI", "Gemini AI"],
-    link: "#",
+    link: "https://github.com/sarathkumarbhasa/sakhimodel",
   },
 ];
 

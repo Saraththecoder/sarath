@@ -4,9 +4,9 @@ import { useState } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 
 const SOCIAL_LINKS = [
-  { label: "GITHUB", url: "https://github.com/SarathBhasa" },
-  { label: "LINKEDIN", url: "https://linkedin.com/in/sarathbhasa" },
-  { label: "PORTFOLIO", url: "#" },
+  { label: "GITHUB", url: "https://github.com/sarathkumarbhasa" },
+  { label: "LINKEDIN", url: "https://www.linkedin.com/in/sarathakumarm3001/" },
+  { label: "PORTFOLIO", url: "https://sarath-portfolio-delta.vercel.app/" },
 ];
 
 function EmailScrambler() {
