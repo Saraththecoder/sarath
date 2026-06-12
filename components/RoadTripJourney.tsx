@@ -10,7 +10,6 @@ import {
   Terminal, 
   Users, 
   Sparkles, 
-  Navigation, 
   Play, 
   Pause, 
   RotateCcw, 
@@ -48,8 +47,8 @@ const MILESTONES_DATA: Milestone[] = [
     color: "#A855F7", // Purple
     glowColor: "rgba(192, 132, 252, 0.4)",
     layoutSide: "left",
-    percentage: 0.18,
-    triggerProgress: 0.25,
+    percentage: 0.20,
+    triggerProgress: 0.28,
     highlights: [
       "Merged 15+ pull requests",
       "GirlScript Summer of Code contributor",
@@ -66,8 +65,8 @@ const MILESTONES_DATA: Milestone[] = [
     color: "#3B82F6", // Electric Blue
     glowColor: "rgba(96, 165, 250, 0.4)",
     layoutSide: "right",
-    percentage: 0.44,
-    triggerProgress: 0.50,
+    percentage: 0.50,
+    triggerProgress: 0.55,
     highlights: [
       "Top 10 Finalist nationally",
       "Designed fraud relation graphs using D3.js",
@@ -84,8 +83,8 @@ const MILESTONES_DATA: Milestone[] = [
     color: "#FBBF24", // Gold/Amber
     glowColor: "rgba(245, 158, 11, 0.4)",
     layoutSide: "left",
-    percentage: 0.68,
-    triggerProgress: 0.72,
+    percentage: 0.77,
+    triggerProgress: 0.79,
     highlights: [
       "Outranked 590+ teams nationwide",
       "Designed AI health symptom analyzer",
@@ -102,30 +101,12 @@ const MILESTONES_DATA: Milestone[] = [
     color: "#84CC16", // Lime Green
     glowColor: "rgba(163, 230, 53, 0.4)",
     layoutSide: "right",
-    percentage: 0.88,
-    triggerProgress: 0.88,
+    percentage: 1.0,
+    triggerProgress: 0.97,
     highlights: [
       "Organized dev bootcamps for 200+ students",
       "Conducted web performance seminars",
       "Hosted official Google Cloud study jams"
-    ]
-  },
-  {
-    id: "startup",
-    title: "Startup Founder",
-    date: "Future",
-    org: "Tech Venture",
-    description: "Building production-grade AI tools that solve concrete real-world pain points at scale.",
-    icon: <Navigation className="w-4 h-4" />,
-    color: "#F97316", // Golden Orange
-    glowColor: "rgba(249, 115, 22, 0.4)",
-    layoutSide: "left",
-    percentage: 1.0,
-    triggerProgress: 0.97,
-    highlights: [
-      "Architecting modular AI endpoints",
-      "Leading micro-SaaS design validation",
-      "Focusing on high-volume developer APIs"
     ]
   },
 ];
@@ -151,7 +132,12 @@ export default function RoadTripJourney() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<string[]>(() => [
+    `[SYSTEM] Navigation systems active. Engine diagnostics: nominal.`,
+    `[SYSTEM] Planned highway route: 2025 Open Source -> 2026 Hackathons -> Google Student Ambassador.`,
+    `[SYSTEM] Cockpit ready. Scroll manually or click PLAY SIMULATION below.`
+  ]);
+  const isFirstRender = useRef(true);
 
   const addLog = useCallback((message: string) => {
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -237,17 +223,12 @@ export default function RoadTripJourney() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Initialize Logs
-  useEffect(() => {
-    setLogs([
-      `[SYSTEM] Navigation systems active. Engine diagnostics: nominal.`,
-      `[SYSTEM] Planned highway route: 2025 Open Source -> 2026 Hackathons -> Google Ambassador -> Venture.`,
-      `[SYSTEM] Cockpit ready. Scroll manually or click PLAY SIMULATION below.`
-    ]);
-  }, []);
-
   // Auto-scroll telemetry log console
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [logs]);
 
@@ -305,7 +286,7 @@ export default function RoadTripJourney() {
         scrollTrigger: {
           trigger: containerEl,
           start: "top top",
-          end: "bottom bottom",
+          end: "+=120%",
           scrub: 0.5,
           pin: true,
           onUpdate: (self) => {
@@ -314,11 +295,10 @@ export default function RoadTripJourney() {
             
             // Map scroll progress boundaries to active checkpoints
             let currentActive = -1;
-            if (progress >= 0.12 && progress < 0.38) currentActive = 0;
-            else if (progress >= 0.38 && progress < 0.62) currentActive = 1;
-            else if (progress >= 0.62 && progress < 0.82) currentActive = 2;
-            else if (progress >= 0.82 && progress < 0.94) currentActive = 3;
-            else if (progress >= 0.94) currentActive = 4;
+            if (progress >= 0.12 && progress < 0.40) currentActive = 0;
+            else if (progress >= 0.40 && progress < 0.68) currentActive = 1;
+            else if (progress >= 0.68 && progress < 0.88) currentActive = 2;
+            else if (progress >= 0.88) currentActive = 3;
             
             setActiveIdx(currentActive);
 
@@ -359,31 +339,21 @@ export default function RoadTripJourney() {
         }, 0);
       }
 
-      // Parallax mountain shifting
+      // Parallax mountain shifting inside the pinned timeline
       if (mountain1El) {
-        gsap.to(mountain1El, {
+        tl.to(mountain1El, {
           y: -80,
           ease: "none",
-          scrollTrigger: {
-            trigger: containerEl,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+          duration: totalDuration,
+        }, 0);
       }
 
       if (mountain2El) {
-        gsap.to(mountain2El, {
+        tl.to(mountain2El, {
           y: -40,
           ease: "none",
-          scrollTrigger: {
-            trigger: containerEl,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+          duration: totalDuration,
+        }, 0);
       }
     }, containerEl);
 
@@ -423,7 +393,7 @@ export default function RoadTripJourney() {
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full h-[300vh] bg-[#08080a] text-zinc-100 z-10 select-none border-t border-[#1e1e24] overflow-hidden"
+      className="relative w-full h-screen bg-[#08080a] text-zinc-100 z-10 select-none border-t border-[#1e1e24] overflow-hidden"
     >
       {/* Floating Particles in Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -460,8 +430,8 @@ export default function RoadTripJourney() {
         <path d="M 0,680 Q 300,730 600,660 Q 850,620 1000,700 L 1000,1200 L 0,1200 Z" fill="#121217" />
       </svg>
 
-      {/* Sticky viewport content */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-between overflow-hidden p-6 md:p-12 z-10">
+      {/* Viewport content */}
+      <div className="relative h-full w-full flex flex-col justify-between overflow-hidden py-4 px-6 md:py-6 md:px-12 z-10">
         
         {/* Dashboard Top Header */}
         <div className="w-full flex items-center justify-between border-b border-[#1e1e24] pb-4 z-20">
@@ -479,7 +449,7 @@ export default function RoadTripJourney() {
             </div>
             <div className="hidden md:block">
               <span>SECTOR: </span>
-              <span className="text-white font-bold">{activeIdx !== -1 ? `${activeIdx + 1} / 5` : "FREE HIGHWAY"}</span>
+              <span className="text-white font-bold">{activeIdx !== -1 ? `${activeIdx + 1} / ${MILESTONES_DATA.length}` : "FREE HIGHWAY"}</span>
             </div>
             <div>
               <span>PROGRESS: </span>
@@ -489,11 +459,11 @@ export default function RoadTripJourney() {
         </div>
 
         {/* Dashboard Main Console Panel */}
-        <div className="flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-6 overflow-hidden">
+        <div className="flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center py-2 lg:py-4 overflow-hidden">
           
           {/* LEFT: Mission Control & Telemetry Panel (5 cols) */}
           {!isMobile ? (
-            <div className="lg:col-span-5 flex flex-col gap-5 h-full max-h-[70vh] justify-between z-20">
+            <div className="lg:col-span-5 flex flex-col gap-3 lg:gap-4 h-full max-h-[60vh] justify-between z-20">
               
               {/* Telemetry Details Card */}
               <div className="flex-grow flex flex-col justify-center">
@@ -504,7 +474,7 @@ export default function RoadTripJourney() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="p-5 border bg-[#0d0d10]/95 backdrop-blur-md flex flex-col gap-4"
+                    className="p-4 border bg-[#0d0d10]/95 backdrop-blur-md flex flex-col gap-3"
                     style={{
                       borderColor: activeIdx !== -1 ? MILESTONES_DATA[activeIdx].color : "#1e1e24",
                       boxShadow: activeIdx !== -1 ? `0 0 20px ${MILESTONES_DATA[activeIdx].glowColor}` : "none",
@@ -578,17 +548,17 @@ export default function RoadTripJourney() {
               </div>
 
               {/* Instrumentation Widget Grid (Speedometer & Coordinates) */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 {/* Speedometer */}
-                <div className="border border-[#1e1e24] bg-[#0d0d10]/80 p-3 flex flex-col justify-between">
+                <div className="border border-[#1e1e24] bg-[#0d0d10]/80 p-2.5 flex flex-col justify-between">
                   <span className="text-[8px] text-zinc-500 font-mono tracking-widest uppercase">CRUISE VELOCITY</span>
-                  <div className="flex items-baseline gap-1.5 mt-2">
+                  <div className="flex items-baseline gap-1.5 mt-1.5">
                     <span className="font-mono text-2xl font-extrabold text-white tracking-tight">
                       {String(speed).padStart(3, "0")}
                     </span>
                     <span className="font-mono text-[8px] text-[#E50914] font-bold">KM/H</span>
                   </div>
-                  <div className="w-full h-1 bg-[#1e1e24] mt-2 relative overflow-hidden">
+                  <div className="w-full h-1 bg-[#1e1e24] mt-1.5 relative overflow-hidden">
                     <div 
                       className="h-full bg-gradient-to-r from-[#E50914] to-yellow-500 transition-all duration-300"
                       style={{ width: `${(speed / 180) * 100}%` }}
@@ -597,9 +567,9 @@ export default function RoadTripJourney() {
                 </div>
 
                 {/* Navigation Coordinates */}
-                <div className="border border-[#1e1e24] bg-[#0d0d10]/80 p-3 flex flex-col justify-between">
+                <div className="border border-[#1e1e24] bg-[#0d0d10]/80 p-2.5 flex flex-col justify-between">
                   <span className="text-[8px] text-zinc-500 font-mono tracking-widest uppercase">NAV COORDINATES</span>
-                  <div className="flex flex-col mt-2 font-mono text-[9px] text-zinc-400 uppercase">
+                  <div className="flex flex-col mt-1.5 font-mono text-[9px] text-zinc-400 uppercase">
                     <div className="flex justify-between">
                       <span>POS X:</span>
                       <span className="text-white font-bold">{(scrollProgress * 1200).toFixed(0)}m</span>
@@ -609,7 +579,7 @@ export default function RoadTripJourney() {
                       <span className="text-white font-bold">{(scrollProgress * 600).toFixed(0)}m</span>
                     </div>
                   </div>
-                  <div className="w-full h-1 bg-[#1e1e24] mt-2 relative">
+                  <div className="w-full h-1 bg-[#1e1e24] mt-1.5 relative">
                     <div 
                       className="h-full bg-[#E50914]"
                       style={{ width: `${scrollProgress * 100}%` }}
@@ -619,7 +589,7 @@ export default function RoadTripJourney() {
               </div>
 
               {/* Telemetry Console Log */}
-              <div className="flex flex-col border border-[#1e1e24] bg-[#070709] rounded-none overflow-hidden h-32">
+              <div className="flex flex-col border border-[#1e1e24] bg-[#070709] rounded-none overflow-hidden h-24">
                 <div className="bg-[#121217] border-b border-[#1e1e24] px-4 py-1.5 flex items-center justify-between text-[8px] text-zinc-500 font-mono">
                   <span>TELEMETRY CONSOLE STREAM</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -647,7 +617,7 @@ export default function RoadTripJourney() {
 
               {/* Main Highway SVG */}
               <svg
-                className="w-full h-full z-10 overflow-visible max-h-[50vh] lg:max-h-[60vh]"
+                className="w-full h-full z-10 overflow-visible max-h-[42vh] lg:max-h-[52vh]"
                 viewBox="0 0 1200 600"
                 preserveAspectRatio="xMidYMid meet"
               >
@@ -655,10 +625,9 @@ export default function RoadTripJourney() {
                   {/* Ambient road lighting gradient */}
                   <linearGradient id="road-glow-grad" x1="0%" y1="100%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#A855F7" stopOpacity="0.8" />
-                    <stop offset="25%" stopColor="#3B82F6" stopOpacity="0.8" />
-                    <stop offset="50%" stopColor="#FBBF24" stopOpacity="0.8" />
-                    <stop offset="75%" stopColor="#84CC16" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#F97316" stopOpacity="0.8" />
+                    <stop offset="33%" stopColor="#3B82F6" stopOpacity="0.8" />
+                    <stop offset="66%" stopColor="#FBBF24" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#84CC16" stopOpacity="0.8" />
                   </linearGradient>
 
                   {/* Volumetric Headlights beam */}

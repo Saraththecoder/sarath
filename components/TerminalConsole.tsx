@@ -122,7 +122,7 @@ export default function TerminalConsole() {
         output = (
           <div className="font-mono text-[11px] text-mutedGray uppercase leading-relaxed">
             <p className="text-neutral-100 font-semibold mb-1">COMMUNICATION PATHWAYS:</p>
-            <p>EMAIL    : BHASASARATHKUMAR051@GMAIL.COM</p>
+            <p>EMAIL    : bhasasarathkumar051@gmail.com</p>
             <p>LINKEDIN : LINKEDIN.COM/IN/SARATHBHASA</p>
             <p>GITHUB   : GITHUB.COM/SARATHBHASA</p>
           </div>
@@ -141,7 +141,7 @@ export default function TerminalConsole() {
               <li>PROVEN HACKATHON TACTICIAN (2X FINALIST)</li>
               <li>MERGED PRs IN GSSOC (OPEN-SOURCE CODEBASES)</li>
             </ul>
-            <p className="text-accent font-semibold mt-3">CONTACT DIRECTLY: BHASASARATHKUMAR051@GMAIL.COM</p>
+            <p className="text-accent font-semibold mt-3">CONTACT DIRECTLY: bhasasarathkumar051@gmail.com</p>
           </div>
         );
         break;

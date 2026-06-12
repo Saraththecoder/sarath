@@ -121,7 +121,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative w-full py-24 px-6 md:px-16 border-t border-borderDark z-10 bg-background overflow-hidden select-none"
+      className="relative w-full pt-6 pb-24 px-6 md:px-16 border-t border-borderDark z-10 bg-background overflow-hidden select-none"
     >
       {/* Background Watermark */}
       <div className="absolute right-0 top-0 pointer-events-none select-none text-borderDark font-syne font-extrabold text-[12rem] md:text-[20rem] opacity-30 leading-none -translate-y-12 translate-x-12">
