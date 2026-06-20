@@ -3,6 +3,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition from "@/components/PageTransition";
+import Chatbot from "@/components/Chatbot";
 
 export const metadata: Metadata = {
   title: "Sarath Kumar Bhasa | Frontend Developer & UI/UX Designer",
@@ -50,6 +51,9 @@ export default function RootLayout({
 
         {/* Swipe animation on load */}
         <PageTransition />
+
+        {/* Interactive Chatbot */}
+        <Chatbot />
 
         {/* Lenis global smooth scroll */}
         <SmoothScroll>

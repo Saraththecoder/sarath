@@ -469,12 +469,12 @@ export default function Projects() {
             return (
               <div
                 key={project.id}
-                className={`project-card w-[80vw] lg:w-[70vw] max-w-[850px] h-[55vh] lg:h-[48vh] flex-shrink-0 flex flex-col lg:flex-row border border-borderDark lg:border-x lg:border-y-0 bg-cardBg relative overflow-hidden snap-center rounded-xl lg:rounded-none transition-all duration-500 ease-out ${accentBorderClass}`}
+                className={`project-card w-[85vw] sm:w-[80vw] lg:w-[70vw] max-w-[850px] h-[530px] sm:h-[500px] lg:h-[48vh] flex-shrink-0 flex flex-col lg:flex-row border border-borderDark lg:border-x lg:border-y-0 bg-cardBg relative overflow-hidden snap-center rounded-xl lg:rounded-none transition-all duration-500 ease-out ${accentBorderClass}`}
                 onMouseEnter={() => setHoveredIdx(idx)}
                 onMouseLeave={() => setHoveredIdx(null)}
               >
                 {/* Left Side: Custom Animated Graphics Widget */}
-                <div className="w-full h-[45%] lg:w-1/2 lg:h-full bg-zinc-950 relative flex items-center justify-center border-b lg:border-b-0 lg:border-r border-borderDark/40 overflow-hidden">
+                <div className="w-full h-[38%] lg:w-1/2 lg:h-full bg-zinc-950 relative flex items-center justify-center border-b lg:border-b-0 lg:border-r border-borderDark/40 overflow-hidden">
                   {/* Film metadata details */}
                   <div className="absolute top-2.5 left-3 font-mono text-[8px] text-mutedGray/70 tracking-wider z-10 select-none">
                     EXP {project.number} / ISO 400
@@ -487,7 +487,7 @@ export default function Projects() {
                 </div>
 
                 {/* Right Side: Details & Action links */}
-                <div className="w-full h-[55%] lg:w-1/2 lg:h-full p-6 lg:p-8 flex flex-col justify-between bg-[#0B0B0E] relative">
+                <div className="w-full h-[62%] lg:w-1/2 lg:h-full p-5 sm:p-6 lg:p-8 flex flex-col justify-between bg-[#0B0B0E] relative">
                   {/* Kodak logo label */}
                   <div className="absolute top-2.5 right-4 font-mono text-[8px] text-mutedGray/50 select-none">
                     KODAK PORTRA 400
