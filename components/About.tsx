@@ -63,12 +63,17 @@ type TabType = "developer" | "student" | "leader";
 
 export default function About() {
   const [activeTab, setActiveTab] = useState<TabType>("developer");
-  const [imageError, setImageError] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Record<TabType, boolean>>({
+    developer: false,
+    student: false,
+    leader: false,
+  });
 
   const tabContent = {
     developer: {
       title: "Frontend Developer",
       icon: <Terminal className="w-5 h-5" />,
+      image: "/developer.png",
       bio: "Obsessed with creating responsive, fluid, and pixel-perfect web interfaces. I design using clean modular structures, smooth custom animations, and bold brutalist print typography. My goal is to build award-winning visual layouts.",
       bullets: [
         "Specializes in Next.js, React, TypeScript & Tailwind CSS",
@@ -79,6 +84,7 @@ export default function About() {
     student: {
       title: "AI & ML Specialist",
       icon: <BookOpen className="w-5 h-5" />,
+      image: "/student.png",
       bio: "Currently pursuing a Bachelor of Technology in Artificial Intelligence and Machine Learning at AITS Tirupati. I maintain a 9.03 CGPA and love bridging complex machine learning engines with polished user interfaces.",
       bullets: [
         "Maintains a high academic standing with a 9.03 CGPA",
@@ -89,6 +95,7 @@ export default function About() {
     leader: {
       title: "Google Ambassador",
       icon: <Users className="w-5 h-5" />,
+      image: "/leader.png",
       bio: "Serving as a Google Student Ambassador 2026. Actively empowering the developer community by speaking at, organizing, and leading web dev bootcamps and contributing to open-source programs like GSSoC.",
       bullets: [
         "Leads community developer initiatives as Google Ambassador",
@@ -144,29 +151,42 @@ export default function About() {
               {/* Photo Frame Container */}
               <div className="w-full h-full bg-cardBg border border-borderDark overflow-hidden relative z-10 p-2">
                 <div className="w-full h-full relative overflow-hidden bg-background">
-                  {!imageError ? (
-                    <Image
-                      src="/sarath.jpg"
-                      alt="Sarath Kumar Bhasa"
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 340px, 340px"
-                      className="object-cover grayscale hover:grayscale-0 scale-100 hover:scale-105 transition-all duration-700 ease-out"
-                      onError={() => setImageError(true)}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-cardBg via-background to-borderDark flex flex-col justify-between p-6">
-                      <span className="font-mono text-2xl font-bold text-accent">SKB</span>
-                      <div className="flex flex-col gap-2">
-                        <span className="font-mono text-xs text-mutedGray tracking-wider">
-                          PHOTO PLACEHOLDER
-                        </span>
-                        <span className="font-mono text-[10px] text-mutedGray">
-                          Please place photo at /public/sarath.jpg
-                        </span>
-                      </div>
-                    </div>
-                  )}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="w-full h-full relative"
+                    >
+                      {!imageErrors[activeTab] ? (
+                        <Image
+                          src={tabContent[activeTab].image}
+                          alt={tabContent[activeTab].title}
+                          fill
+                          priority
+                          sizes="(max-width: 768px) 340px, 340px"
+                          className="object-cover scale-100 hover:scale-105 transition-all duration-700 ease-out"
+                          onError={() => {
+                            setImageErrors((prev) => ({ ...prev, [activeTab]: true }));
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-cardBg via-background to-borderDark flex flex-col justify-between p-6">
+                          <span className="font-mono text-2xl font-bold text-accent">SKB</span>
+                          <div className="flex flex-col gap-2">
+                            <span className="font-mono text-xs text-mutedGray tracking-wider">
+                              PHOTO PLACEHOLDER
+                            </span>
+                            <span className="font-mono text-[10px] text-mutedGray">
+                              Please place photo at {tabContent[activeTab].image}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
 
                   {/* Pulsing Status Badge */}
                   <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-md px-3 py-1.5 border border-borderDark flex items-center gap-2.5 z-20">

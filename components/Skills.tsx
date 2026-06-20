@@ -610,37 +610,44 @@ export default function Skills() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {certificationsData.map((cert, index) => (
-              <motion.div
+              <a
                 key={cert.title}
-                whileHover={{ x: 6, borderColor: "#E50914" }}
-                className="flex flex-col sm:flex-row sm:items-center justify-between border border-borderDark bg-cardBg/40 p-6 hover:bg-cardBg relative group transition-all duration-300 hover:shadow-[0_0_20px_rgba(229,9,20,0.03)]"
+                href={cert.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                {/* Left accent bar */}
-                <div className="absolute top-0 bottom-0 left-0 w-[2px] h-0 bg-accent transition-all duration-300 group-hover:h-full" />
+                <motion.div
+                  whileHover={{ x: 6, borderColor: "#E50914" }}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between border border-borderDark bg-cardBg/40 p-6 hover:bg-cardBg relative group transition-all duration-300 hover:shadow-[0_0_20px_rgba(229,9,20,0.03)] cursor-pointer"
+                >
+                  {/* Left accent bar */}
+                  <div className="absolute top-0 bottom-0 left-0 w-[2px] h-0 bg-accent transition-all duration-300 group-hover:h-full" />
 
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-borderDark bg-background flex items-center justify-center text-accent shrink-0 group-hover:border-accent transition-colors duration-300">
-                    <Award className="w-5 h-5" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 border border-borderDark bg-background flex items-center justify-center text-accent shrink-0 group-hover:border-accent transition-colors duration-300">
+                      <Award className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-mono text-[8px] text-accent tracking-widest uppercase font-bold">
+                        VERIFIED CREDENTIAL
+                      </span>
+                      <h4 className="font-syne font-extrabold text-foreground text-sm md:text-base uppercase tracking-tight">
+                        {cert.title}
+                      </h4>
+                      <span className="font-mono text-[9px] text-mutedGray uppercase tracking-wider">
+                        ISSUED BY: {cert.issuer} &bull;
+                        CRED-ID: SKB-{index + 1}09{index}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-[8px] text-accent tracking-widest uppercase font-bold">
-                      VERIFIED CREDENTIAL
-                    </span>
-                    <h4 className="font-syne font-extrabold text-foreground text-sm md:text-base uppercase tracking-tight">
-                      {cert.title}
-                    </h4>
-                    <span className="font-mono text-[9px] text-mutedGray uppercase tracking-wider">
-                      ISSUED BY: {cert.issuer} &bull;
-                      CRED-ID: SKB-{index + 1}09{index}
-                    </span>
-                  </div>
-                </div>
 
-                <div className="flex items-center gap-2 mt-4 sm:mt-0 font-mono text-xs text-accent font-semibold ml-4 self-end sm:self-center">
-                  <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>{cert.year}</span>
-                </div>
-              </motion.div>
+                  <div className="flex items-center gap-2 mt-4 sm:mt-0 font-mono text-xs text-accent font-semibold ml-4 self-end sm:self-center">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>{cert.year}</span>
+                  </div>
+                </motion.div>
+              </a>
             ))}
           </div>
         </div>

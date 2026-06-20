@@ -21,14 +21,12 @@ export default function PageTransition() {
     };
   }, []);
 
-  if (isCompleted) return null;
-
   return (
     <motion.div
       initial={{ y: "0%" }}
       animate={{ y: "100%" }}
       transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 bg-background w-full h-full z-[99999] pointer-events-none"
+      className={`fixed inset-0 bg-background w-full h-full z-[99999] pointer-events-none ${isCompleted ? 'hidden' : ''}`}
       style={{ willChange: "transform" }}
     />
   );

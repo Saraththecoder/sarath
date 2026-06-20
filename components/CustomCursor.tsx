@@ -69,14 +69,14 @@ export default function CustomCursor() {
 
       if (dot && ring && isVisible) {
         // Direct positioning for the dot
-        dot.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0)`;
+        dot.style.transform = `translate3d(calc(${mousePos.current.x}px - 50%), calc(${mousePos.current.y}px - 50%), 0)`;
 
         // Lerp positioning for the outer trailing ring (lag effect)
         const lerpFactor = 0.15;
         ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerpFactor;
         ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerpFactor;
         
-        ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
+        ring.style.transform = `translate3d(calc(${ringPos.current.x}px - 50%), calc(${ringPos.current.y}px - 50%), 0)`;
       }
 
       requestRef.current = requestAnimationFrame(render);
@@ -99,28 +99,28 @@ export default function CustomCursor() {
   }, [isVisible, reducedMotion]);
 
   // If mobile or reduced motion is active, do not render custom cursor markup
-  if (reducedMotion) return null;
+  if (reducedMotion) return <div aria-hidden="true" style={{ display: 'none' }} />;
 
   return (
-    <>
+    <div aria-hidden="true" className="pointer-events-none z-[99999]">
       {/* Inner dot */}
       <div
         ref={dotRef}
-        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-accent pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 w-2 h-2 rounded-full bg-accent pointer-events-none transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         } ${isHovered ? "scale-50 opacity-50" : "scale-100"}`}
-        style={{ willChange: "transform" }}
+        style={{ willChange: "transform", transform: "translate3d(-50%, -50%, 0)" }}
       />
       {/* Outer lagging ring */}
       <div
         ref={ringRef}
-        className={`fixed top-0 left-0 w-8 h-8 rounded-full border border-accent pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out ${
+        className={`fixed top-0 left-0 w-8 h-8 rounded-full border border-accent pointer-events-none transition-all duration-200 ease-out ${
           isVisible ? "opacity-100" : "opacity-0"
         } ${isHovered ? "scale-150 bg-accent/10 border-accent" : "scale-100"} ${
           isClicking ? "scale-75 bg-accent/30" : ""
         }`}
-        style={{ willChange: "transform" }}
+        style={{ willChange: "transform", transform: "translate3d(-50%, -50%, 0)" }}
       />
-    </>
+    </div>
   );
 }
