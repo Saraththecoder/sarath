@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
+
 import PageTransition from "@/components/PageTransition";
 import Chatbot from "@/components/Chatbot";
 
@@ -46,8 +46,7 @@ export default function RootLayout({
         {/* Global Grain/Noise Overlay */}
         <div className="grain-overlay" />
 
-        {/* Custom cursor follower */}
-        <CustomCursor />
+
 
         {/* Swipe animation on load */}
         <PageTransition />
