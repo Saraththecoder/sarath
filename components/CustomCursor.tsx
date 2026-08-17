@@ -16,6 +16,9 @@ export default function CustomCursor() {
   const ringPos = useRef({ x: 0, y: 0 });
   const requestRef = useRef<number | null>(null);
 
+  // Ref mirror for isVisible so the rAF loop always reads the latest value
+  const isVisibleRef = useRef(false);
+
   useEffect(() => {
     // Check if device supports hover/fine pointer (touch devices don't)
     const mediaQuery = window.matchMedia("(pointer: fine)");
@@ -29,10 +32,14 @@ export default function CustomCursor() {
     const onMouseMove = (e: MouseEvent) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        setIsVisible(true);
+      }
     };
 
     const onMouseLeave = () => {
+      isVisibleRef.current = false;
       setIsVisible(false);
     };
 
@@ -58,7 +65,7 @@ export default function CustomCursor() {
     // Observe changes to the DOM to bind hover events to dynamically rendered content
     const observer = new MutationObserver(addHoverListeners);
     observer.observe(document.body, { childList: true, subtree: true });
-    
+
     // Initial binding
     addHoverListeners();
 
@@ -67,7 +74,8 @@ export default function CustomCursor() {
       const dot = dotRef.current;
       const ring = ringRef.current;
 
-      if (dot && ring && isVisible) {
+      // Use the ref (not stale state) to check visibility
+      if (dot && ring && isVisibleRef.current) {
         // Direct positioning for the dot
         dot.style.transform = `translate3d(calc(${mousePos.current.x}px - 50%), calc(${mousePos.current.y}px - 50%), 0)`;
 
@@ -75,7 +83,7 @@ export default function CustomCursor() {
         const lerpFactor = 0.15;
         ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerpFactor;
         ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerpFactor;
-        
+
         ring.style.transform = `translate3d(calc(${ringPos.current.x}px - 50%), calc(${ringPos.current.y}px - 50%), 0)`;
       }
 
@@ -91,12 +99,13 @@ export default function CustomCursor() {
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
       observer.disconnect();
-      
+
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [isVisible, reducedMotion]);
+  // Only re-run if reducedMotion changes — NOT on isVisible changes
+  }, [reducedMotion]);
 
   // If mobile or reduced motion is active, do not render custom cursor markup
   if (reducedMotion) return <div aria-hidden="true" style={{ display: 'none' }} />;
